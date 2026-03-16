@@ -23,6 +23,13 @@ var employee = new Employee
         ZipCode = "12345",
     },
     PreviousEmployers = { "Google", "Microsoft", "Apple" },
+    Relatives =
+    {
+        { "Father", "John Wick Sr" },
+        { "Mother", "Jane Wick" },
+        { "Brother", "Jimmy Wick" },
+        { "Sister", "Jenny Wick" },
+    },
 };
 
 // Serialize the employee object to a file
@@ -39,5 +46,11 @@ using (var input = File.OpenRead("emp.dat"))
 }
 
 Console.WriteLine(empFromFile.ToString());
+
+//iterate over the relatives map<string, string>
+foreach (var kvp in empFromFile.Relatives)
+{
+    Console.WriteLine($"{kvp.Key}: {kvp.Value}");
+}
 
 Console.WriteLine("Finished!");
