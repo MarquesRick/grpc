@@ -13,11 +13,13 @@ var employee = new Employee
     LastName = "Wick",
     IsRetired = false,
     BirthDate = birthDateTimestamp,
+    Age = 45, // Use age instead of birth date - because oneof is used and we need to send only one of the two fields
     MaritalStatus = Employee.Types.MaritalStatus.Married,
     CurrentAddress = new Address
     {
-        StreetName = "123 Main St",
         City = "Anytown",
+        StreetName = "123 Main St",
+        HouseNumber = 123,
         ZipCode = "12345",
     },
     PreviousEmployers = { "Google", "Microsoft", "Apple" },
