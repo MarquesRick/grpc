@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "grpc", "example\grpc.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "groomserver", "groomserver\groomserver.csproj", "{733F29EA-36F4-41BC-9767-52A2966626B1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "groomclient", "groomclient\groomclient.csproj", "{FF5A4E03-FA78-44FA-88A0-0BA4F66E99F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,18 @@ Global
 		{733F29EA-36F4-41BC-9767-52A2966626B1}.Release|x64.Build.0 = Release|Any CPU
 		{733F29EA-36F4-41BC-9767-52A2966626B1}.Release|x86.ActiveCfg = Release|Any CPU
 		{733F29EA-36F4-41BC-9767-52A2966626B1}.Release|x86.Build.0 = Release|Any CPU
+		{FF5A4E03-FA78-44FA-88A0-0BA4F66E99F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF5A4E03-FA78-44FA-88A0-0BA4F66E99F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF5A4E03-FA78-44FA-88A0-0BA4F66E99F6}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{FF5A4E03-FA78-44FA-88A0-0BA4F66E99F6}.Debug|x64.Build.0 = Debug|Any CPU
+		{FF5A4E03-FA78-44FA-88A0-0BA4F66E99F6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FF5A4E03-FA78-44FA-88A0-0BA4F66E99F6}.Debug|x86.Build.0 = Debug|Any CPU
+		{FF5A4E03-FA78-44FA-88A0-0BA4F66E99F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF5A4E03-FA78-44FA-88A0-0BA4F66E99F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF5A4E03-FA78-44FA-88A0-0BA4F66E99F6}.Release|x64.ActiveCfg = Release|Any CPU
+		{FF5A4E03-FA78-44FA-88A0-0BA4F66E99F6}.Release|x64.Build.0 = Release|Any CPU
+		{FF5A4E03-FA78-44FA-88A0-0BA4F66E99F6}.Release|x86.ActiveCfg = Release|Any CPU
+		{FF5A4E03-FA78-44FA-88A0-0BA4F66E99F6}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
