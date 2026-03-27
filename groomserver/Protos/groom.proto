@@ -5,6 +5,7 @@ option csharp_namespace = "gRoom.gRPC.Messages";
 package groom;
 
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
 
 // Request message for registering a new room.
 message RoomRegistrationRequest {
@@ -23,8 +24,16 @@ message NewFlash {
   string news_item = 2;
 }
 
+// Message representing the status of a news flash stream.
 message NewStreamStatus {
   bool success = 1;
+}
+
+// Message representing a received message.
+message ReceivedMessage {
+  google.protobuf.Timestamp message_time = 1;
+  string content = 2;
+  string user=3;
 }
 
 // The groom service definition.
@@ -33,4 +42,6 @@ service Groom {
   rpc RegisterToRoom (RoomRegistrationRequest) returns (RoomRegistrationResponse);
   // Receives a stream of news flash items and returns a status message.
   rpc SendNewsFlash (stream NewFlash) returns (NewStreamStatus);
+  // Starts monitoring for incoming messages and returns a stream of received messages.
+  rpc StartMonitoring (google.protobuf.Empty) returns (stream ReceivedMessage);
 }

@@ -1,5 +1,6 @@
 using gRoom.gRPC.Messages;
 using Grpc.Core;
+using Google.Protobuf.WellKnownTypes;
 
 namespace gRoom.gRPC.Services;
 
@@ -39,5 +40,25 @@ public class GroomService : Groom.GroomBase
         }
 
         return new NewStreamStatus { Success = true };
+    }
+
+    public override async Task StartMonitoring(
+        Empty request,
+        IServerStreamWriter<ReceivedMessage> streamWriter,
+        ServerCallContext context
+    )
+    {
+        while (true)
+        {
+            await streamWriter.WriteAsync(
+                new ReceivedMessage
+                {
+                    MessageTime = Timestamp.FromDateTime(DateTime.UtcNow),
+                    Content = "This is a monitored message.",
+                    User = "System"
+                }
+            );
+            await Task.Delay(TimeSpan.FromSeconds(1)); 
+        }
     }
 }
