@@ -1,6 +1,7 @@
-using gRoom.gRPC.Messages;
-using Grpc.Core;
 using Google.Protobuf.WellKnownTypes;
+using gRoom.gRPC.Messages;
+using gRoom.gRPC.Utils;
+using Grpc.Core;
 
 namespace gRoom.gRPC.Services;
 
@@ -34,6 +35,7 @@ public class GroomService : Groom.GroomBase
         while (await requestStream.MoveNext())
         {
             var newsFlash = requestStream.Current;
+            MessagesQueue.AddNewsToQueue(newsFlash);
             _logger.LogInformation(
                 $"Received news flash: {newsFlash.NewsItem} at {newsFlash.NewsTime}"
             );
@@ -50,15 +52,20 @@ public class GroomService : Groom.GroomBase
     {
         while (true)
         {
-            await streamWriter.WriteAsync(
-                new ReceivedMessage
-                {
-                    MessageTime = Timestamp.FromDateTime(DateTime.UtcNow),
-                    Content = "This is a monitored message.",
-                    User = "System"
-                }
-            );
-            await Task.Delay(TimeSpan.FromSeconds(1)); 
+            if (MessagesQueue.GetMessagesCount() > 0)
+            {
+                var msg = MessagesQueue.GetNextMessage();
+                await streamWriter.WriteAsync(msg);
+            }
+            // await streamWriter.WriteAsync(
+            //     new ReceivedMessage
+            //     {
+            //         MessageTime = Timestamp.FromDateTime(DateTime.UtcNow),
+            //         Content = "This is a monitored message.",
+            //         User = "System",
+            //     }
+            // );
+            await Task.Delay(TimeSpan.FromSeconds(1));
         }
     }
 }
