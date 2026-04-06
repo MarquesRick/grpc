@@ -1,0 +1,35 @@
+syntax="proto3";
+
+option csharp_namespace = "gRoom.gRPC.Messages";
+
+package groom;
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+// Request message for registering a new room.
+message RoomRegistrationRequest {
+  string room_name = 1;
+  string user_name = 2;
+}
+
+// Response message for room registration.
+message RoomRegistrationResponse {
+  bool joined = 1;
+}
+
+// Message representing a chat message.
+message ChatMessage {
+google.protobuf.Timestamp message_time = 1;
+string content = 2;
+string user=3;
+string room=4;
+}
+
+// The groom service definition.
+service Groom {
+  // Registers a new room and returns its ID.
+  rpc RegisterToRoom (RoomRegistrationRequest) returns (RoomRegistrationResponse);
+  // Starts a chat session where both the client and server can send and receive chat messages.
+  rpc StartChat (stream ChatMessage) returns (stream ChatMessage);
+}

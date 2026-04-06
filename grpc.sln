@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "groomclient", "groomclient\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "groomadmin", "groomadmin\groomadmin.csproj", "{ABF68A89-3072-4627-A492-D61E4BA89EA8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fullroomclient", "fullroomclient\fullroomclient.csproj", "{6C9AF8FE-FB33-4E57-9863-25B60703F0AA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,18 @@ Global
 		{ABF68A89-3072-4627-A492-D61E4BA89EA8}.Release|x64.Build.0 = Release|Any CPU
 		{ABF68A89-3072-4627-A492-D61E4BA89EA8}.Release|x86.ActiveCfg = Release|Any CPU
 		{ABF68A89-3072-4627-A492-D61E4BA89EA8}.Release|x86.Build.0 = Release|Any CPU
+		{6C9AF8FE-FB33-4E57-9863-25B60703F0AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C9AF8FE-FB33-4E57-9863-25B60703F0AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C9AF8FE-FB33-4E57-9863-25B60703F0AA}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6C9AF8FE-FB33-4E57-9863-25B60703F0AA}.Debug|x64.Build.0 = Debug|Any CPU
+		{6C9AF8FE-FB33-4E57-9863-25B60703F0AA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6C9AF8FE-FB33-4E57-9863-25B60703F0AA}.Debug|x86.Build.0 = Debug|Any CPU
+		{6C9AF8FE-FB33-4E57-9863-25B60703F0AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C9AF8FE-FB33-4E57-9863-25B60703F0AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C9AF8FE-FB33-4E57-9863-25B60703F0AA}.Release|x64.ActiveCfg = Release|Any CPU
+		{6C9AF8FE-FB33-4E57-9863-25B60703F0AA}.Release|x64.Build.0 = Release|Any CPU
+		{6C9AF8FE-FB33-4E57-9863-25B60703F0AA}.Release|x86.ActiveCfg = Release|Any CPU
+		{6C9AF8FE-FB33-4E57-9863-25B60703F0AA}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
