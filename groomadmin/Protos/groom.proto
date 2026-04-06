@@ -1,0 +1,22 @@
+syntax="proto3";
+
+option csharp_namespace = "gRoom.gRPC.Messages";
+
+package groom;
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+
+// Message representing a received message.
+message ReceivedMessage {
+  google.protobuf.Timestamp message_time = 1;
+  string content = 2;
+  string user=3;
+}
+
+// The groom service definition.
+service Groom {
+  // Starts monitoring for incoming messages and returns a stream of received messages.
+  rpc StartMonitoring (google.protobuf.Empty) returns (stream ReceivedMessage);
+}
