@@ -14,17 +14,14 @@ public class GroomService : Groom.GroomBase
         _logger = logger;
     }
 
-    public override Task<RoomRegistrationResponse> RegisterToRoom(
+    public override async Task<RoomRegistrationResponse> RegisterToRoom(
         RoomRegistrationRequest request,
         ServerCallContext context
     )
     {
         _logger.LogInformation("Service called...");
-        var rnd = new Random();
-        var roomNum = rnd.Next(1, 100);
-        _logger.LogInformation($"Room no. {roomNum} and name {request.RoomName} registered.");
-        var resp = new RoomRegistrationResponse { RoomId = roomNum, RoomName = request.RoomName };
-        return Task.FromResult(resp);
+        UsersQueues.CreateUserQueue(request.RoomName, request.UserName);
+        return await Task.FromResult(new RoomRegistrationResponse { Joined = true });
     }
 
     public override async Task<NewStreamStatus> SendNewsFlash(
@@ -67,5 +64,92 @@ public class GroomService : Groom.GroomBase
             // );
             await Task.Delay(TimeSpan.FromSeconds(1));
         }
+    }
+
+    public override async Task StartChat(
+        IAsyncStreamReader<ChatMessage> incomingStream,
+        IServerStreamWriter<ChatMessage> outgoingStream,
+        ServerCallContext context
+    )
+    {
+        // Wait for the first message to get the user name
+        while (!await incomingStream.MoveNext())
+        {
+            await Task.Delay(100);
+        }
+
+        string userName = incomingStream.Current.User;
+        string room = incomingStream.Current.Room;
+        Console.WriteLine($"User {userName} connected to room {incomingStream.Current.Room}");
+
+        // TEST TEST TEST TEST - TO USE ONLY WHEN TESTING WITH BLOOMRPC
+        UsersQueues.CreateUserQueue(room, userName);
+        // END TEST END TEST END TEST
+
+        // Get messages from the user
+        var reqTask = Task.Run(async () =>
+        {
+            while (await incomingStream.MoveNext())
+            {
+                Console.WriteLine($"Message received: {incomingStream.Current.Content}");
+                UsersQueues.AddMessageToRoom(
+                    ConvertToReceivedMessage(incomingStream.Current),
+                    incomingStream.Current.Room
+                );
+            }
+        });
+
+        // Check for messages to send to the user
+        var respTask = Task.Run(async () =>
+        {
+            while (true)
+            {
+                var userMsg = UsersQueues.GetMessageForUser(userName);
+                if (userMsg != null)
+                {
+                    var userMessage = ConvertToChatMessage(userMsg, room);
+                    await outgoingStream.WriteAsync(userMessage);
+                }
+                if (MessagesQueue.GetMessagesCount() > 0)
+                {
+                    var news = MessagesQueue.GetNextMessage();
+                    var newsMessage = ConvertToChatMessage(news, room);
+                    await outgoingStream.WriteAsync(newsMessage);
+                }
+
+                await Task.Delay(200);
+            }
+        });
+
+        // Keep the method running
+        while (true)
+        {
+            await Task.Delay(10000);
+        }
+    }
+
+    private static ReceivedMessage ConvertToReceivedMessage(ChatMessage chatMsg)
+    {
+        var rcMsg = new ReceivedMessage
+        {
+            Content = chatMsg.Content,
+            MessageTime = chatMsg.MessageTime,
+            User = chatMsg.User,
+        };
+
+        return rcMsg;
+    }
+
+    private static ChatMessage ConvertToChatMessage(ReceivedMessage rcMsg, string room)
+    {
+        var chatMsg = new ChatMessage
+        {
+            Content = rcMsg.Content,
+            MessageTime = rcMsg.MessageTime,
+            User = rcMsg.User,
+            Room = room,
+        };
+
+        return chatMsg;
     }
 }
