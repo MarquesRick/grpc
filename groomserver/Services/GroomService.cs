@@ -62,6 +62,10 @@ public class GroomService : Groom.GroomBase
             //         User = "System",
             //     }
             // );
+            if (UsersQueues.GetAdminQueueMessageCount() > 0)
+            {
+                await streamWriter.WriteAsync(UsersQueues.GetNextAdminMessage());
+            }
             await Task.Delay(TimeSpan.FromSeconds(1));
         }
     }
